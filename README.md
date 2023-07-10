@@ -14,18 +14,17 @@ Refacer, a simple tool that allows you to create deepfakes with multiple faces w
 
 [![Watch the video](https://img.youtube.com/vi/mXk1Ox7B244/maxresdefault.jpg)](https://youtu.be/mXk1Ox7B244)
 
-
 ## System Compatibility
 
 Refacer has been thoroughly tested on the following operating systems:
 
 | Operating System | CPU Support | GPU Support |
 | ---------------- | ----------- | ----------- |
-| MacOSX           | ✅         | :warning:         |
-| Windows          | ✅         | ✅         |
-| Linux            | ✅         | ✅         |
+| MacOSX           | ✅          | :warning:   |
+| Windows          | ✅          | ✅          |
+| Linux            | ✅          | ✅          |
 
-The application is compatible with both CPU and GPU (Nvidia CUDA) environments, and MacOSX(CoreML) 
+The application is compatible with both CPU and GPU (Nvidia CUDA) environments, and MacOSX(CoreML)
 
 :warning: Please note, we do not recommend using `onnxruntime-silicon` on MacOSX due to an apparent issue with memory management. If you manage to compile `onnxruntime` for Silicon, the program is prepared to use CoreML.
 
@@ -35,7 +34,6 @@ Ensure that you have `ffmpeg` installed and correctly configured. There are many
 
 - [How to Install FFmpeg](https://www.hostinger.com/tutorials/how-to-install-ffmpeg)
 
-
 ## Installation
 
 Refacer has been tested and is known to work with Python 3.10.9, but it is likely to work with other Python versions as well. It is recommended to use a virtual environment for setting up and running the project to avoid potential conflicts with other Python packages you may have installed.
@@ -43,38 +41,42 @@ Refacer has been tested and is known to work with Python 3.10.9, but it is likel
 Follow these steps to install Refacer:
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/xaviviro/refacer.git
-    cd refacer
-    ```
+
+   ```bash
+   git clone https://github.com/xaviviro/refacer.git
+   cd refacer
+   ```
 
 2. Download the Insightface model:
    You can manually download the model created by Insightface from this [link](https://huggingface.co/deepinsight/inswapper/resolve/main/inswapper_128.onnx) and add it to the project folder. Alternatively, if you have `wget` installed, you can use the following command:
-    ```bash
-    wget --content-disposition https://huggingface.co/deepinsight/inswapper/resolve/main/inswapper_128.onnx
-    ```
+
+   ```bash
+   wget --content-disposition https://huggingface.co/deepinsight/inswapper/resolve/main/inswapper_128.onnx
+   ```
 
 3. Install dependencies:
 
-    * For CPU (compatible with Windows, MacOSX, and Linux):
-    ```bash
-    pip install -r requirements.txt
-    ```
+   - For CPU (compatible with Windows, MacOSX, and Linux):
 
-    * For GPU (compatible with Windows and Linux only, requires a NVIDIA GPU with CUDA and its libraries):
-    ```bash
-    pip install -r requirements-GPU.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-     * For CoreML (compatible with MacOSX, requires Silicon architecture):
-    ```bash
-    pip install -r requirements-COREML.txt
-    ```
+   - For GPU (compatible with Windows and Linux only, requires a NVIDIA GPU with CUDA and its libraries):
 
-    For more information on installing the CUDA necessary to use `onnxruntime-gpu`, please refer directly to the official [ONNX Runtime repository](https://github.com/microsoft/onnxruntime/).
+   ```bash
+   pip install -r requirements-GPU.txt
+   ```
+
+   - For CoreML (compatible with MacOSX, requires Silicon architecture):
+
+   ```bash
+   pip install -r requirements-COREML.txt
+   ```
+
+   For more information on installing the CUDA necessary to use `onnxruntime-gpu`, please refer directly to the official [ONNX Runtime repository](https://github.com/microsoft/onnxruntime/).
 
 For more details on using the Insightface model, you can refer to their [example](https://github.com/deepinsight/insightface/tree/master/examples/in_swapper).
-
 
 ## Usage
 
@@ -87,21 +89,46 @@ python app.py
 Then, open your web browser and navigate to the following address:
 
 ```
-http://127.0.0.1:7680
+http://127.0.0.1:7860
 ```
 
+## Usage (Docker)
+
+Building the image.
+
+```
+docker build . --build-arg REQUIREMENTS_FILE=requirements.txt -t refacer
+```
+
+Running the image.
+
+```
+ docker run -it --rm -p 7860:7860 refacer
+```
+
+Scripts
+
+- [run.sh](run.sh) - Runs using CPU
+- [run-gpu.sh](run-gpu.sh) - Runs using NVIDIA GPU
+- [run-coreml.sh](run-coreml.sh) - Runs using Apple CoreML
+
+For example to run with CPU. Execute the following command.
+
+```
+./run.sh
+```
+
+Then open in a browser and navigate to http://localhost:7860/
 
 ## Questions?
 
 If you have any questions or issues, feel free to [open an issue](https://github.com/xaviviro/refacer/issues/new) or submit a pull request.
-
 
 ## Recognition Module
 
 The `recognition` folder in this repository is derived from Insightface's GitHub repository. You can find the original source code here: [Insightface Recognition Source Code](https://github.com/deepinsight/insightface/tree/master/web-demos/src_recognition)
 
 This module is used for recognizing and handling face data within the Refacer application, enabling its powerful deepfake capabilities. We are grateful to Insightface for their work and for making their code available.
-
 
 ## Disclaimer
 
